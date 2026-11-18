@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "toolret"
+version = "0.1.0"
+description = "Tool retrieval for LLM agents with large tool registries: BM25, dense, hybrid and contrastively fine-tuned retrievers benchmarked on Glaive function-calling v2, served to agents over MCP."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=1.24",
+  "mcp>=2.0,<3",
+]
+
+[project.optional-dependencies]
+embeddings = ["torch>=2.2", "sentence-transformers>=3.0"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+toolret = "toolret.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/toolret"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
